@@ -25,7 +25,7 @@
 % the assignment. The north position is given in the first row and the east
 % position in the second row. 
 
-
+%% lool
 %%
 tstart=0;           % Sim start time
 tstop=10000;        % Sim stop time
