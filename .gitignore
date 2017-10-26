@@ -23,3 +23,6 @@ octave-workspace
 
 # PDF- files
 *.pdf
+
+# obsolete simulink files
+*.r2016a

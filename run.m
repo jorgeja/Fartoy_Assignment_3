@@ -25,7 +25,7 @@
 % the assignment. The north position is given in the first row and the east
 % position in the second row. 
 
-%% lool
+
 %%
 tstart=0;           % Sim start time
 tstop=10000;        % Sim stop time
@@ -36,5 +36,39 @@ v0=[6.63 0]';       % Initial velocity (body)
 psi0=0;             % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=0;                % Current on (1)/off (0)
+desired_heading = 0;
 
+
+load('WP.mat');
+
+K = zeros(10,1);
+Tc = zeros(10,1);
+ratio = zeros(10,1);
+
+for delta_c = 1:1:10
+
+    dc = 0.1*delta_c;
+    
 sim MSFartoystyring % The measurements from the simulink model are automatically written to the workspace.
+
+%pathplotter(p(:,1),p(:,2),psi(:),tsamp,1,tstart,tstop,0,WP);
+
+r_deriv = r(2)/t(2);
+tNy = 0:1:200;
+T_vector = tNy*r_deriv;
+steadyState = r(length(r));
+
+Tc(delta_c) = steadyState/r_deriv;
+K(delta_c) = steadyState * Tc(delta_c) / dc;
+ratio(delta_c) = K(delta_c)/Tc(delta_c);
+
+
+% figure(delta_c)
+% plot(t,r);
+% hold on
+% plot(tNy,T_vector);
+% hold on
+% plot(ones(1,200)*steadyState);
+% legend('yaw rate','timeconstantvector','steadystate');
+
+end
