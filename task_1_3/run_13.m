@@ -41,8 +41,9 @@ c=0;                % Current on (1)/off (0)
 
 % Heading Control Parameters
 psi_desired = pi/4;
-Kp_psi = 1000;
-Kd_r = 1;
+r_desired = 0;
+Kp_psi = 1;
+Kd_r = .01;
 
 
 sim MSFartoystyring % The measurements from the simulink model are automatically written to the workspace.
