@@ -41,6 +41,7 @@ c=0;                % Current on (1)/off (0)
 
 % Heading Control Parameters
 psi_desired = pi/4;
+r_desired = 0;
 Kp_psi = 1;
 Kd_r = .01;
 
