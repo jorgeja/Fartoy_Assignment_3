@@ -26,3 +26,6 @@ octave-workspace
 
 # obsolete simulink files
 *.r2016a
+
+# picture files
+*.eps
