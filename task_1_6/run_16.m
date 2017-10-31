@@ -34,13 +34,19 @@ tstop=10000;        % Sim stop time
 tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
                 
 p0=zeros(2,1);      % Initial position (NED)
-v0=[6.63 0]';       % Initial velocity (body)
+v0=[0.001 0]';       % Initial velocity (body)
 psi0=0;             % Inital yaw angle
 r0=0;               % Inital yaw rate
-c=1;                % Current on (1)/off (0)
+c=0;                % Current on (1)/off (0)
+
+% Velocity Dynamics 
+num = [0 0.00142452745428828 8.50704549113513e-06]; %from system identification toolbox
+den = [1 0.00589033596766649 8.66512373642295e-06]; %from system identification toolbox
+vd = tf(num,den);
 
 nc_max = 85 * 2 * pi / 60; % rad/s
 dc_lim = 25 * pi/180; 
+nc_d = 7.3;
 
 
 % Heading Control Parameters
@@ -53,26 +59,18 @@ sim MSFartoystyring % The measurements from the simulink model are automatically
 %pathplotter(p(:,1),p(:,2),psi(:),tsamp,1,tstart,tstop,0,WP);
 fig1 = figure(1);
 set(fig1, 'Position', [100 300 700 400])
-subplot(1,2,1);
-plot(t,psi,t,psi_d,'--',t,psi_e,'linewidth',1.5);
+plot(t,v(:,1),'linewidth',1.5);
 xlabel('time');
-ylabel('rads');
-legend('\psi','\psi desired','\psi error');
+ylabel('m/s');
 xlim([0,1000]);
-grid on
-subplot(1,2,2);
-plot(t,r,t,r_d,'--',t,r_e,'linewidth',1.5);
-xlabel('time');
-ylabel('rad/s');
-xlim([0,1000]);
-legend('r','r desired','r error');
+legend('velocity u');
 grid on
 
 fig2 = figure(2);
-set(fig2, 'Position', [800 300 700 400])
-plot(t,dc_in,t,dc_lim*ones(1,length(t)),t,-dc_lim*ones(1,length(t)),'linewidth',1.5);
+set(fig2,'Position', [800 300 700 400])
+plot(t,nc_in,t,nc_max*ones(1,length(t)),'linewidth',1.5);
 xlabel('time');
-ylabel('rad');
+ylabel('rad/s');
 xlim([0,1000]);
-legend('\delta_c','upper limit','lower limit');
+legend('n_c','upper limit','lower limit');
 grid on
