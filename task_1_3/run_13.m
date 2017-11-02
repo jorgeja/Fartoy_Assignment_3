@@ -42,8 +42,8 @@ c=0;                % Current on (1)/off (0)
 % Heading Control Parameters
 psi_desired = pi/4;
 r_desired = 0;
-Kp_psi = 1;
-Kd_r = .01;
+Kp_psi = 1000;
+Kd_r = 0;
 
 
 sim MSFartoystyring % The measurements from the simulink model are automatically written to the workspace.
@@ -53,3 +53,5 @@ sim MSFartoystyring % The measurements from the simulink model are automatically
 figure(1)
 plot(t,r,t,psi_d,t,psi);
 legend('turning rate','psidesired','psi');
+xlim([0,1000]);
+grid on

@@ -58,7 +58,8 @@ Kp_u = 300;
 Ki_u = 0.025;
 
 % Heading Control Parameters
-Kp_psi = 100; 
+Kp_psi = 100;
+Ki_psi = 0;         %1/1000*Kp_psi;
 Kd_r = 1000;  
 
 
