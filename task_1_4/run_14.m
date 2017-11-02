@@ -53,23 +53,23 @@ sim MSFartoystyring % The measurements from the simulink model are automatically
 fig1 = figure(1);
 set(fig1, 'Position', [100 300 700 400])
 subplot(1,2,1);
-plot(t,psi,t,psi_d,'--',t,psi_e,'linewidth',1.5);
+plot(t,psi*180/pi,t,psi_d*180/pi,'--',t,psi_e*180/pi,'linewidth',1.5);
 xlabel('time');
-ylabel('rads');
+ylabel('degrees');
 legend('\psi','\psi desired','\psi error');
 xlim([0,1000]);
 grid on
 subplot(1,2,2);
-plot(t,r,t,r_d,'--',t,r_e,'linewidth',1.5);
+plot(t,r*180/pi,t,r_d*180/pi,'--',t,r_e*180/pi,'linewidth',1.5);
 xlabel('time');
-ylabel('rad/s');
+ylabel('degree/s');
 xlim([0,1000]);
 legend('r','r desired','r error');
 grid on
 
 fig2 = figure(2);
 set(fig2, 'Position', [800 300 700 400])
-plot(t,dc_in,t,dc_lim*ones(1,length(t)),t,-dc_lim*ones(1,length(t)),'linewidth',1.5);
+plot(t,dc_in*180/pi,t,dc_lim*ones(1,length(t))*180/pi,t,-dc_lim*ones(1,length(t))*180/pi,'linewidth',1.5);
 xlabel('time');
 ylabel('rad');
 xlim([0,1000]);
