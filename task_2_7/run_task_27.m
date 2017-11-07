@@ -64,7 +64,18 @@ Kd_r = 1000;
 
 % Load Waypoints
 %load('WP.mat');
-look_ahead_distance = 100;
+look_ahead_distance = 100; % Eirik: Ifølge example 10.1 er denne vanligvis
+                           % mellom 1,5 og 2,5 ganger lengden på skipet (som er 304,8m).
+                           % Burde endre verdien til 500 eller noe. Kan
+                           % forkortes Lpp.
+
+% 2_7 script
+U_aMax = 20; %Eirik: Dette tallet tok jeg vilkårlig 
+delta_pTilde = 300; %Eirik: Sier noe om når båten kjører fort. Et lavt tall fører
+                    % til at den gasser på mye når interceptor nærmer seg
+                    % target. Vilkårlig valgt.
+nu_t = [-2.4412;
+        -1.7437];
 
 sim MSFartoystyring % The measurements from the simulink model are automatically written to the workspace.
 
