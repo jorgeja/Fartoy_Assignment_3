@@ -7,13 +7,9 @@ lad = u(3);
 
 persistent k;
 persistent wp;
-persistent first;
 k = 1;
 
-if first == 0
-    wp = load('WP.mat');
-    first = 1;
-end
+
 
 % Angle of the path
 x_0 = wp(1,k);
