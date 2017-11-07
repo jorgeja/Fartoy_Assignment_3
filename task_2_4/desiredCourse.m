@@ -7,11 +7,17 @@ lookahead_distance = u(3);
 
 persistent k;
 persistent wp;
+<<<<<<< HEAD:task_2_7/desiredCourse.m
+k = 1;
+
+
+=======
 
 if isempty(wp)
     wp = load('WP.mat');
     k = 1;
 end
+>>>>>>> 4abd72938ff1ed5c8d61a2dcf99f7683b06b2681:task_2_4/desiredCourse.m
 
 if sqrt((p(1)-wp.WP(1,k+1))^2+(p(2)-wp.WP(2,k+1))^2) < lookahead_distance && k < 5
     k = k+1;
