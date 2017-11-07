@@ -31,7 +31,7 @@ clear all;
 %%
 tstart=0;           % Sim start time
 tstop=10000;        % Sim stop time
-tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
+tsamp=100;           % Sampling time for how often states are stored. (NOT ODE solver time step)
 
 % Helping Functions
 rad2grad = 180/pi;
@@ -64,7 +64,7 @@ Kd_r = 1000;
 
 % Load Waypoints
 %load('WP.mat');
-look_ahead_distance = 100;
+lookahead_distance = 1000;
 
 sim MSFartoystyring % The measurements from the simulink model are automatically written to the workspace.
 
@@ -99,7 +99,7 @@ xlim([0,plot_time]);
 legend('n_c','upper limit','lower limit');
 grid on
 
-
+load('WP.mat');
 fig5 = figure(5);
 set(fig5, 'Position', [100 50 700 400])
 pathplotter(p(:,1),p(:,2),psi(:),tsamp,1,tstart,tstop,0,WP);
