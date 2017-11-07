@@ -31,16 +31,16 @@ clear all;
 %%
 tstart=0;           % Sim start time
 tstop=10000;        % Sim stop time
-tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
+tsamp=100;           % Sampling time for how often states are stored. (NOT ODE solver time step)
 
 % Helping Functions
 rad2grad = 180/pi;
 grad2rad = pi/180;
 
 % Initial Conditions
-p0=zeros(2,1);      % Initial position (NED)
-v0=[4 0]';       % Initial velocity (body)
-psi0=0;             % Inital yaw angle
+p0=[1500;500];      % Initial position (NED)
+v0=[6.63 0]';       % Initial velocity (body)
+psi0=50;             % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=1;                % Current on (1)/off (0)
 
@@ -51,7 +51,6 @@ vd = tf(num,den);
 
 nc_max = 85 * 2 * pi / 60; % rad/s
 dc_lim = 25 * grad2rad; 
-u_d = 7;
 
 % Velocity Control Parameters
 Kp_u = 300;
@@ -76,6 +75,8 @@ delta_pTilde = 300; %Eirik: Sier noe om når båten kjører fort. Et lavt tall føre
                     % target. Vilkårlig valgt.
 nu_t = [-2.4412;
         -1.7437];
+p0_t = [-3500;
+        -2500];
 
 sim MSFartoystyring % The measurements from the simulink model are automatically written to the workspace.
 
@@ -83,17 +84,22 @@ sim MSFartoystyring % The measurements from the simulink model are automatically
 
 plot_time = 2000;
 
-fig1 = figure(1);
-set(fig1, 'Position', [100 50 700 400])
-plot(t,v(:,1),t,u_d*ones(1,length(t)),'--',t,u_e,'linewidth',1.5);
+WP = [0 0;-3500 -2500]';
+fig5 = figure(5);
+set(fig5, 'Position', [100 50 700 400])
+pathplotter(p(:,1),p(:,2),psi(:),tsamp,1,tstart,tstop,1,WP);
+
+fig3 = figure(3);
+set(fig3, 'Position', [100 50 700 400])
+plot(t,v(:,1),t,u_d,'--',t,u_e,'linewidth',1.5);
 xlabel('time');
 ylabel('m/s');
 xlim([0,plot_time]);
 legend('u','u desired','u error');
 grid on
 
-fig2 = figure(2);
-set(fig2, 'Position', [100 400 700 400])
+fig4 = figure(4);
+set(fig4, 'Position', [100 400 700 400])
 plot(t,r*rad2grad,t,psi*rad2grad,'linewidth',1.5);
 xlabel('time');
 ylabel('degree, degree/s');
@@ -101,16 +107,11 @@ xlim([0,plot_time]);
 legend('r','\psi');
 grid on
 
-fig3 = figure(3);
-set(fig3,'Position', [800 400 700 400])
+fig5 = figure(5);
+set(fig5,'Position', [800 400 700 400])
 plot(t,nc_out,t,nc_max*ones(1,length(t)),t,-nc_max*ones(1,length(t)),'linewidth',1.5);
 xlabel('time');
 ylabel('rad/s');
 xlim([0,plot_time]);
 legend('n_c','upper limit','lower limit');
 grid on
-
-
-fig5 = figure(5);
-set(fig5, 'Position', [100 50 700 400])
-pathplotter(p(:,1),p(:,2),psi(:),tsamp,1,tstart,tstop,0,WP);
