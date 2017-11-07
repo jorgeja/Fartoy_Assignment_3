@@ -69,8 +69,35 @@ lookahead_distance = 1000;
 sim MSFartoystyring % The measurements from the simulink model are automatically written to the workspace.
 
 %Plotting
-fig1 = figure(1)
+
+plot_time = 2000;
+
+fig1 = figure(1);
 set(fig1, 'Position', [100 50 700 400])
+plot(t,v(:,1),t,u_d*ones(1,length(t)),'--',t,u_e,'linewidth',1.5);
+xlabel('time');
+ylabel('m/s');
+xlim([0,plot_time]);
+legend('u','u desired','u error');
+grid on
+
+fig2 = figure(2);
+set(fig2, 'Position', [100 400 700 400])
+plot(t,r*rad2grad,t,psi*rad2grad,'linewidth',1.5);
+xlabel('time');
+ylabel('degree, degree/s');
+xlim([0,plot_time]);
+legend('r','\psi');
+grid on
+
+fig3 = figure(3);
+set(fig3,'Position', [800 400 700 400])
+plot(t,nc_out,t,nc_max*ones(1,length(t)),t,-nc_max*ones(1,length(t)),'linewidth',1.5);
+xlabel('time');
+ylabel('rad/s');
+xlim([0,plot_time]);
+legend('n_c','upper limit','lower limit');
+grid on
 
 load('WP.mat');
 fig5 = figure(5);
