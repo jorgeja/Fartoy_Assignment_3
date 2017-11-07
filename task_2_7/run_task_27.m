@@ -53,24 +53,18 @@ nc_max = 85 * 2 * pi / 60; % rad/s
 dc_lim = 25 * grad2rad; 
 
 % Velocity Control Parameters
-Kp_u = 300;
+Kp_u = 0.6;
 Ki_u = 0.025;
+windup_gain = 1;
 
 % Heading Control Parameters
 Kp_psi = 1;
 Ki_psi = 0;         %1/1000*Kp_psi;
-Kd_r = 100;  
-
-% Load Waypoints
-%load('WP.mat');
-look_ahead_distance = 100; % Eirik: Ifølge example 10.1 er denne vanligvis
-                           % mellom 1,5 og 2,5 ganger lengden på skipet (som er 304,8m).
-                           % Burde endre verdien til 500 eller noe. Kan
-                           % forkortes Lpp.
+Kd_r = 5;  
 
 % 2_7 script
-U_aMax = 20; %Eirik: Dette tallet tok jeg vilkårlig 
-delta_pTilde = 300; %Eirik: Sier noe om når båten kjører fort. Et lavt tall fører
+U_aMax = 5; %Eirik: Dette tallet tok jeg vilkårlig 
+delta_pTilde = 1000; %Eirik: Sier noe om når båten kjører fort. Et lavt tall fører
                     % til at den gasser på mye når interceptor nærmer seg
                     % target. Vilkårlig valgt.
 nu_t = [-2.4412;
@@ -82,15 +76,15 @@ sim MSFartoystyring % The measurements from the simulink model are automatically
 
 %Plotting
 
-plot_time = 2000;
+plot_time = 10000;
 
 WP = [0 0;-3500 -2500]';
 fig5 = figure(5);
-set(fig5, 'Position', [100 50 700 400])
+%set(fig5, 'Position', [100 50 700 400])
 pathplotter(p(:,1),p(:,2),psi(:),tsamp,1,tstart,tstop,1,WP);
 
 fig3 = figure(3);
-set(fig3, 'Position', [100 50 700 400])
+%set(fig3, 'Position', [100 50 700 400])
 plot(t,v(:,1),t,u_d,'--',t,u_e,'linewidth',1.5);
 xlabel('time');
 ylabel('m/s');
@@ -99,7 +93,7 @@ legend('u','u desired','u error');
 grid on
 
 fig4 = figure(4);
-set(fig4, 'Position', [100 400 700 400])
+%set(fig4, 'Position', [100 400 700 400])
 plot(t,r*rad2grad,t,psi*rad2grad,'linewidth',1.5);
 xlabel('time');
 ylabel('degree, degree/s');
@@ -108,7 +102,7 @@ legend('r','\psi');
 grid on
 
 fig5 = figure(5);
-set(fig5,'Position', [800 400 700 400])
+%set(fig5,'Position', [800 400 700 400])
 plot(t,nc_out,t,nc_max*ones(1,length(t)),t,-nc_max*ones(1,length(t)),'linewidth',1.5);
 xlabel('time');
 ylabel('rad/s');
