@@ -59,8 +59,8 @@ windup_gain = 1;
 
 % Heading Control Parameters
 Kp_psi = 1;
-Ki_psi = 0;         %1/1000*Kp_psi;
 Kd_r = 5;  
+T_psi = 50000;
 
 % 2_7 script
 U_aMax = 5; %Eirik: Dette tallet tok jeg vilkårlig 
@@ -83,7 +83,7 @@ fig5 = figure(5);
 %set(fig5, 'Position', [100 50 700 400])
 pathplotter(p(:,1),p(:,2),psi(:),tsamp,1,tstart,tstop,1,WP);
 
-fig3 = figure(3);
+fig3 = figure(4);
 %set(fig3, 'Position', [100 50 700 400])
 plot(t,v(:,1),t,u_d,'--',t,u_e,'linewidth',1.5);
 xlabel('time');
@@ -92,7 +92,7 @@ xlim([0,plot_time]);
 legend('u','u desired','u error');
 grid on
 
-fig4 = figure(4);
+fig4 = figure(5);
 %set(fig4, 'Position', [100 400 700 400])
 plot(t,r*rad2grad,t,psi*rad2grad,'linewidth',1.5);
 xlabel('time');
@@ -101,7 +101,7 @@ xlim([0,plot_time]);
 legend('r','\psi');
 grid on
 
-fig5 = figure(5);
+fig5 = figure(6);
 %set(fig5,'Position', [800 400 700 400])
 plot(t,nc_out,t,nc_max*ones(1,length(t)),t,-nc_max*ones(1,length(t)),'linewidth',1.5);
 xlabel('time');
@@ -109,3 +109,7 @@ ylabel('rad/s');
 xlim([0,plot_time]);
 legend('n_c','upper limit','lower limit');
 grid on
+
+figure(7)
+plot(t,rad2deg(atan2(nu_d(:,2),nu_d(:,1))));
+legend('\chi_d')
