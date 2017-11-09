@@ -42,7 +42,7 @@ p0=[1500;500];      % Initial position (NED)
 v0=[6.63 0]';       % Initial velocity (body)
 psi0=deg2rad(50);             % Inital yaw angle
 r0=0;               % Inital yaw rate
-c=1;                % Current on (1)/off (0)
+c=0;                % Current on (1)/off (0)
 
 % Velocity Dynamics 
 num = [0 0.00142452745428828 8.50704549113513e-06]; %from system identification toolbox
@@ -58,13 +58,13 @@ Ki_u = 0.025;
 windup_gain = 1;
 
 % Heading Control Parameters
-Kp_psi = 1;
-Kd_r = 5;  
+Kp_psi = 100;
+Kd_r = 1000;  
 T_psi = 50000;
 
 % 2_7 script
 U_aMax = 5; %Eirik: Dette tallet tok jeg vilkårlig 
-delta_pTilde = 1000; %Eirik: Sier noe om når båten kjører fort. Et lavt tall fører
+delta_pTilde = 3000; %Eirik: Sier noe om når båten kjører fort. Et lavt tall fører
                     % til at den gasser på mye når interceptor nærmer seg
                     % target. Vilkårlig valgt.
 nu_t = [-2.4412;
@@ -94,11 +94,11 @@ grid on
 
 fig4 = figure(5);
 %set(fig4, 'Position', [100 400 700 400])
-plot(t,r*rad2grad,t,psi*rad2grad,'linewidth',1.5);
+plot(t,r*rad2grad,t,psi_d*rad2grad,t,psi*rad2grad,t,psi_e*rad2grad,'linewidth',1.5);
 xlabel('time');
 ylabel('degree, degree/s');
 xlim([0,plot_time]);
-legend('r','\psi');
+legend('r','\psi_d','\psi','\psi_e');
 grid on
 
 fig5 = figure(6);
