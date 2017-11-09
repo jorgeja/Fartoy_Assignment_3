@@ -39,7 +39,7 @@ grad2rad = pi/180;
 
 % Initial Conditions
 p0=zeros(2,1);      % Initial position (NED)
-v0=[4 0]';       % Initial velocity (body)
+v0=[0.01 0]';       % Initial velocity (body)
 psi0=0;             % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=1;                % Current on (1)/off (0)
@@ -53,7 +53,7 @@ Kp_u = 100;
 Ki_u = 1;
 
 % Heading Control Parameters
-Kp_psi = 100;
+Kp_psi = 10;
 Ki_psi = 0;         %1/1000*Kp_psi;
 Kd_r = 1000;  
 
@@ -68,7 +68,7 @@ plot_time = 2000;
 
 fig1 = figure(1);
 set(fig1, 'Position', [100 50 700 400])
-plot(t,v(:,1),t,u_d*ones(1,length(t)),'--',t,u_e,'linewidth',1.5);
+plot(t,v(:,1),t,u_desired,'--',t,u_e,'linewidth',1.5);
 xlabel('time');
 ylabel('m/s');
 xlim([0,plot_time]);

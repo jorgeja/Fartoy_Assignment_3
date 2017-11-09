@@ -52,7 +52,7 @@ zeta = 1;
 omega_n = omega_b/(sqrt(1-2*zeta^2+sqrt(4*zeta^4-4*zeta^2+2)));
 
 
-Kp_psi = 100;    %(omega_n^2 * T)/K
+Kp_psi = 10;    %(omega_n^2 * T)/K
 Kd_r = 1000;     %(2*zeta*omega_n*T - 1)/K  
 Ki_psi = 0;      %(omega_n^3 * T)/(10*K)
 
