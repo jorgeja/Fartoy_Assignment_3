@@ -46,7 +46,7 @@ vd = tf(num,den);
 
 nc_max = 85 * 2 * pi / 60; % rad/s
 dc_lim = 25 * pi/180; 
-nc_d = nc_max*0.5;
+nc_d = 4.5;
     
 
 % Heading Control Parameters

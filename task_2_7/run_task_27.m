@@ -28,21 +28,23 @@
 close all;
 clear all;
 
-%%
+%% Simulation parameters
+
 tstart=0;           % Sim start time
 tstop=10000;        % Sim stop time
 tsamp=100;           % Sampling time for how often states are stored. (NOT ODE solver time step)
 
-% Helping Functions
+%% Helping Functions
 rad2grad = 180/pi;
 grad2rad = pi/180;
 
+%% Ship
 % Initial Conditions
 p0=[1500;500];      % Initial position (NED)
 v0=[6.63 0]';       % Initial velocity (body)
 psi0=deg2rad(50);             % Inital yaw angle
 r0=0;               % Inital yaw rate
-c=0;                % Current on (1)/off (0)
+c=1;                % Current on (1)/off (0)
 
 % Velocity Dynamics 
 num = [0 0.00142452745428828 8.50704549113513e-06]; %from system identification toolbox
@@ -52,17 +54,22 @@ vd = tf(num,den);
 nc_max = 85 * 2 * pi / 60; % rad/s
 dc_lim = 25 * grad2rad; 
 
+%% Control Parameters
 % Velocity Control Parameters
 Kp_u = 0.6;
 Ki_u = 0.025;
 windup_gain = 1;
 
 % Heading Control Parameters
-Kp_psi = 100;
-Kd_r = 1000;  
-T_psi = 50000;
+Kp_psi = 10;
+Kd_r = 1000;
 
-% 2_7 script
+% Course control Parameters
+Kp_chi = 0;
+Ki_chi = 0.01;
+T_psi = 50;
+
+%% target tracking
 U_aMax = 5; %Eirik: Dette tallet tok jeg vilkårlig 
 delta_pTilde = 3000; %Eirik: Sier noe om når båten kjører fort. Et lavt tall fører
                     % til at den gasser på mye når interceptor nærmer seg
@@ -74,7 +81,7 @@ p0_t = [-3500;
 
 sim MSFartoystyring % The measurements from the simulink model are automatically written to the workspace.
 
-%Plotting
+%% Plotting
 
 plot_time = 10000;
 
@@ -111,5 +118,5 @@ legend('n_c','upper limit','lower limit');
 grid on
 
 figure(7)
-plot(t,rad2deg(atan2(nu_d(:,2),nu_d(:,1))));
-legend('\chi_d')
+plot(t,rad2deg(chi_d),t,rad2deg(normalize(chi(:))),t,rad2deg(chi_e));
+legend('\chi_d','\chi','\chi_e')
