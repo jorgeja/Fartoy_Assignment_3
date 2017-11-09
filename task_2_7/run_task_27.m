@@ -61,12 +61,13 @@ Ki_u = 0.025;
 windup_gain = 1;
 
 % Heading Control Parameters
-Kp_psi = 100;
+Kp_psi = 10;
 Kd_r = 1000;
 
 % Course control Parameters
-Kp_chi = 0.2;
+Kp_chi = 0;
 Ki_chi = 0.01;
+T_psi = 50;
 
 %% target tracking
 U_aMax = 5; %Eirik: Dette tallet tok jeg vilkårlig 
