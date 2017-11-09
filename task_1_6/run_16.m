@@ -46,8 +46,8 @@ vd = tf(num,den);
 
 nc_max = 85 * 2 * pi / 60; % rad/s
 dc_lim = 25 * pi/180; 
-nc_d = 7.3;
-
+nc_d = nc_max*0.5;
+    
 
 % Heading Control Parameters
 Kp_psi = 100;
@@ -57,13 +57,15 @@ Kd_r = 1000;
 
 sim MSFartoystyring % The measurements from the simulink model are automatically written to the workspace.
 
+plot_time = 10000;
+
 %pathplotter(p(:,1),p(:,2),psi(:),tsamp,1,tstart,tstop,0,WP);
 fig1 = figure(1);
 set(fig1, 'Position', [100 300 700 400])
 plot(t,v(:,1),'linewidth',1.5);
 xlabel('time');
 ylabel('m/s');
-xlim([0,1000]);
+xlim([0,plot_time]);
 legend('velocity u');
 grid on
 
@@ -72,6 +74,6 @@ set(fig2,'Position', [800 300 700 400])
 plot(t,nc_in,t,nc_max*ones(1,length(t)),'linewidth',1.5);
 xlabel('time');
 ylabel('rad/s');
-xlim([0,1000]);
+xlim([0,plot_time]);
 legend('n_c','upper limit','lower limit');
 grid on
