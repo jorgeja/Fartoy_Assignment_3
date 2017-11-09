@@ -51,7 +51,7 @@ vd = tf(num,den);
 
 nc_max = 85 * 2 * pi / 60; % rad/s
 dc_lim = 25 * grad2rad; 
-u_d = 7;
+u_d = 4;
 
 % Velocity Control Parameters
 Kp_u = 300;
