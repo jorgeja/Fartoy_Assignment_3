@@ -31,7 +31,7 @@ clear all;
 %% Simulation parameters
 
 tstart=0;           % Sim start time
-tstop=10000;        % Sim stop time
+tstop=5000;        % Sim stop time
 tsamp=100;           % Sampling time for how often states are stored. (NOT ODE solver time step)
 
 %% Helping Functions
@@ -46,27 +46,22 @@ psi0=deg2rad(50);             % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=1;                % Current on (1)/off (0)
 
-% Velocity Dynamics 
-num = [0 0.00142452745428828 8.50704549113513e-06]; %from system identification toolbox
-den = [1 0.00589033596766649 8.66512373642295e-06]; %from system identification toolbox
-vd = tf(num,den);
-
 nc_max = 85 * 2 * pi / 60; % rad/s
 dc_lim = 25 * grad2rad; 
 
 %% Control Parameters
 % Velocity Control Parameters
-Kp_u = 0.6;
-Ki_u = 0.025;
+Kp_u = 2.5;
+Ki_u = 0.25;
 windup_gain = 1;
 
 % Heading Control Parameters
 Kp_psi = 10;
-Kd_r = 1000;
+Kd_r = 1500;
 
 % Course control Parameters
 Kp_chi = 0;
-Ki_chi = 0.01;
+Ki_chi = 0.00;
 T_psi = 50;
 
 %% target tracking
@@ -83,15 +78,21 @@ sim MSFartoystyring % The measurements from the simulink model are automatically
 
 %% Plotting
 
-plot_time = 10000;
+plot_time = 5000;
 
 WP = [0 0;-3500 -2500]';
-fig5 = figure(5);
-%set(fig5, 'Position', [100 50 700 400])
 pathplotter(p(:,1),p(:,2),psi(:),tsamp,1,tstart,tstop,1,WP);
 
-fig3 = figure(4);
-%set(fig3, 'Position', [100 50 700 400])
+figure(4)
+plot(t,rad2deg(chi_d),t,rad2deg(normalize(chi(:))),t,rad2deg(chi_e),'linewidth',1.5);
+title('Ship Course')
+xlabel('time');
+ylabel('degrees');
+xlim([0 plot_time]);
+legend('\chi_d','\chi','\chi_e');
+grid on
+%{
+figure(5);
 plot(t,v(:,1),t,u_d,'--',t,u_e,'linewidth',1.5);
 xlabel('time');
 ylabel('m/s');
@@ -99,24 +100,19 @@ xlim([0,plot_time]);
 legend('u','u desired','u error');
 grid on
 
-fig4 = figure(5);
-%set(fig4, 'Position', [100 400 700 400])
-plot(t,r*rad2grad,t,psi_d*rad2grad,t,psi*rad2grad,t,psi_e*rad2grad,'linewidth',1.5);
+figure(6);
+plot(t,r*rad2grad,t,rad2deg(mod(psi_d,2*pi)),t,rad2deg(mod(psi,2*pi)),t,rad2deg(psi_e),'linewidth',1.5);
 xlabel('time');
 ylabel('degree, degree/s');
 xlim([0,plot_time]);
 legend('r','\psi_d','\psi','\psi_e');
 grid on
 
-fig5 = figure(6);
-%set(fig5,'Position', [800 400 700 400])
+figure(7);
 plot(t,nc_out,t,nc_max*ones(1,length(t)),t,-nc_max*ones(1,length(t)),'linewidth',1.5);
 xlabel('time');
 ylabel('rad/s');
 xlim([0,plot_time]);
 legend('n_c','upper limit','lower limit');
 grid on
-
-figure(7)
-plot(t,rad2deg(chi_d),t,rad2deg(normalize(chi(:))),t,rad2deg(chi_e));
-legend('\chi_d','\chi','\chi_e')
+%}
