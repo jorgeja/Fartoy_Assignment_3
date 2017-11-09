@@ -31,7 +31,7 @@ clear all;
 %% Simulation parameters
 
 tstart=0;           % Sim start time
-tstop=10000;        % Sim stop time
+tstop=5000;        % Sim stop time
 tsamp=100;           % Sampling time for how often states are stored. (NOT ODE solver time step)
 
 %% Helping Functions
@@ -62,7 +62,7 @@ windup_gain = 1;
 
 % Heading Control Parameters
 Kp_psi = 10;
-Kd_r = 1000;
+Kd_r = 1500;
 
 % Course control Parameters
 Kp_chi = 0;
@@ -83,7 +83,7 @@ sim MSFartoystyring % The measurements from the simulink model are automatically
 
 %% Plotting
 
-plot_time = 10000;
+plot_time = 5000;
 
 WP = [0 0;-3500 -2500]';
 fig5 = figure(5);
@@ -101,7 +101,7 @@ grid on
 
 fig4 = figure(5);
 %set(fig4, 'Position', [100 400 700 400])
-plot(t,r*rad2grad,t,psi_d*rad2grad,t,psi*rad2grad,t,psi_e*rad2grad,'linewidth',1.5);
+plot(t,r*rad2grad,t,rad2deg(mod(psi_d,2*pi)),t,rad2deg(mod(psi,2*pi)),t,rad2deg(psi_e),'linewidth',1.5);
 xlabel('time');
 ylabel('degree, degree/s');
 xlim([0,plot_time]);
