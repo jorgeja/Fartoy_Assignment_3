@@ -31,7 +31,7 @@ clear all;
 %% Simulation parameters
 
 tstart=0;           % Sim start time
-tstop=10000;        % Sim stop time
+tstop=5000;        % Sim stop time
 tsamp=100;           % Sampling time for how often states are stored. (NOT ODE solver time step)
 
 %% Helping Functions
@@ -78,7 +78,7 @@ sim MSFartoystyring % The measurements from the simulink model are automatically
 
 %% Plotting
 
-plot_time = 10000;
+plot_time = 5000;
 
 WP = [0 0;-3500 -2500]';
 pathplotter(p(:,1),p(:,2),psi(:),tsamp,1,tstart,tstop,1,WP);
@@ -91,7 +91,7 @@ ylabel('degrees');
 xlim([0 plot_time]);
 legend('\chi_d','\chi','\chi_e');
 grid on
-
+%{
 figure(5);
 plot(t,v(:,1),t,u_d,'--',t,u_e,'linewidth',1.5);
 xlabel('time');
@@ -115,3 +115,4 @@ ylabel('rad/s');
 xlim([0,plot_time]);
 legend('n_c','upper limit','lower limit');
 grid on
+%}
