@@ -44,18 +44,13 @@ psi0=0;             % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=1;                % Current on (1)/off (0)
 
-% Velocity Dynamics 
-num = [0 0.00142452745428828 8.50704549113513e-06]; %from system identification toolbox
-den = [1 0.00589033596766649 8.66512373642295e-06]; %from system identification toolbox
-vd = tf(num,den);
-
 nc_max = 85 * 2 * pi / 60; % rad/s
 dc_lim = 25 * grad2rad; 
 u_d = 7;
 
 % Velocity Control Parameters
-Kp_u = 300;
-Ki_u = 0.025;
+Kp_u = 100;
+Ki_u = 1;
 
 % Heading Control Parameters
 Kp_psi = 100;
