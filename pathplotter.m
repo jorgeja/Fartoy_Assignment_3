@@ -53,12 +53,13 @@ for now=1:dec:length(x)
     end
     
     %MS Fartoystyring
+    if mod(now,10) == 0
     tmpR=[cos(psi(now)) -sin(psi(now)); sin(psi(now)) cos(psi(now))];
     boat = tmpR*[L/2 .9*L/2 .5*L/2 -L/2 -L/2 .5*L/2 .9*L/2 L/2; 
               0 10 20 20 -20 -20 -10 0];
     plot(y(now)+boat(2,:),x(now)+boat(1,:),'y');
     patch(y(now)+boat(2,:),x(now)+boat(1,:),'y');
-    
+    end
     tnow=tnow+tsamp*dec;
 end
 hold off
