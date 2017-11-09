@@ -30,7 +30,7 @@ clear all;
 
 %%
 tstart=0;           % Sim start time
-tstop=10000;        % Sim stop time
+tstop=6000;        % Sim stop time
 tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
 
 % Helping Functions
@@ -51,11 +51,11 @@ vd = tf(num,den);
 
 nc_max = 85 * 2 * pi / 60; % rad/s
 dc_lim = 25 * grad2rad; 
-u_d = 7;
+u_d = 4;
 
 % Velocity Control Parameters
-Kp_u = 300;
-Ki_u = 0.025;
+Kp_u = 100;
+Ki_u = 1;
 
 % Heading Control Parameters
 Kp_psi = 10;
@@ -76,12 +76,11 @@ for i=1:length(chi_desired) %Ugly fix to make pretty plot
     end
 end
 
-plot_time = 2000;
 fig1 = figure(1); %Vil ha: course, heading, desired course, sideslip
 plot(t,chi*rad2grad,t,chi_desired*rad2grad,t,psi*rad2grad,t,beta*rad2grad,'linewidth',1.5);
 xlabel('time');
 ylabel('degrees');
-xlim([0,5000]);
+xlim([0,tstop]);
 legend('\chi','\chi_d','\psi','\beta');
 grid on
 
